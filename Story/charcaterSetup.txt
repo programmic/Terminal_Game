@@ -1,0 +1,23 @@
+>gender Choose your gender &?
+%Male:genderMale
+%Female:genderFemale
+%Nonbinary:genderNonBinary~
+
+>genderMale Your gender was successfully set to be Male. &genderSelected~
+
+>genderFemale Your gender was successfully set to be Female. &genderSelected~
+
+>genderNonBinary Your gender was successfully set to be Nonbinary. & genderSelected~
+
+>genderSelected Your gender was selected &class~
+
+>class Next, please select your class &?
+%Ranger|classRanger
+%Wizzard|classSpellCaster
+%Knight|classKnight~
+
+>classRanger You decided to become a Ranger. &#prolog
+
+>classSpellCaster You decided to study the ancient arts of magic. &#prolog
+
+>classKnight As a noble person, you decided to become a Knight. &#prolog
