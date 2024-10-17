@@ -81,6 +81,9 @@ def clearTerminal() -> None:
     """
     print("\033c", end="")  # Clears Python Console Output
 
+def clearLastTerminalLine() -> None:
+    print(f"{colors.CURSOR_UP}{colors.CURSOR_ERASE_LINE}",end="")
+
 def makeMatrix(
         pX: int, 
         pY: int, 
