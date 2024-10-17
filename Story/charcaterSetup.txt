@@ -3,21 +3,22 @@
 %Female:genderFemale
 %Nonbinary:genderNonBinary~
 
->genderMale Your gender was successfully set to be Male. &genderSelected~
+>genderMale Your gender was successfully set to be Male. &class~
 
->genderFemale Your gender was successfully set to be Female. &genderSelected~
+>genderFemale Your gender was successfully set to be Female. &class~
 
->genderNonBinary Your gender was successfully set to be Nonbinary. & genderSelected~
+>genderNonBinary Your gender was successfully set to be Nonbinary. & class~
 
->genderSelected Your gender was selected &class~
 
 >class Next, please select your class &?
 %Ranger|classRanger
 %Wizzard|classSpellCaster
 %Knight|classKnight~
 
->classRanger You decided to become a Ranger. &#prolog
+>classRanger You decided to become a Ranger. &name~
 
->classSpellCaster You decided to study the ancient arts of magic. &#prolog
+>classSpellCaster You decided to study the ancient arts of magic. &name~
 
->classKnight As a noble person, you decided to become a Knight. &#prolog
+>classKnight As a noble person, you decided to become a Knight. &name~
+
+>name Error: Could not set name as not yet implemented &#prolog~

@@ -3,6 +3,7 @@ from colorsys import hsv_to_rgb
 from math import sqrt, acos, exp
 from functools import wraps
 import time
+import os
 
 clear = "\033c"
 
@@ -83,6 +84,78 @@ def clearTerminal() -> None:
 
 def clearLastTerminalLine() -> None:
     print(f"{colors.CURSOR_UP}{colors.CURSOR_ERASE_LINE}",end="")
+
+def get_terminal_width() -> int:
+    """Gets the width of the terminal in characters."""
+    return os.get_terminal_size().columns
+
+def calculate_wrapped_lines(text: str, terminal_width: int) -> int:
+    """
+    Calculates how many lines a text will take up in the terminal considering wrapping.
+    
+    Args:
+        text (str): The text to be printed.
+        terminal_width (int): The width of the terminal.
+    
+    Returns:
+        (int): The number of lines the text will take up.
+    """
+    wrapped_lines = wrap_text(text, terminal_width)
+    return len(wrapped_lines)
+
+def wrap_text(text: str, width: int) -> list[str]:
+    """
+    Wrap the text into a list of lines, ensuring that no line exceeds the terminal width.
+    
+    Args:
+        text (str): The text to wrap.
+        width (int): The maximum width of the terminal.
+    
+    Returns:
+        list[str]: A list of wrapped lines.
+    """
+    words = text.split(' ')
+    lines = []
+    current_line = ""
+    
+    for word in words:
+        # Add the word to the current line if it fits within the width
+        if len(current_line) + len(word) + 1 <= width:
+            current_line += (word + ' ')
+        else:
+            # If the word doesn't fit, move the current line to the list and start a new line
+            lines.append(current_line.strip())
+            current_line = word + ' '
+    
+    # Add the last line if there's remaining text
+    if current_line:
+        lines.append(current_line.strip())
+    
+    return lines
+
+def print_wrapped_text(text: str) -> None:
+    """
+    Prints the text with manual wrapping to avoid issues with terminal automatic line wrapping.
+    
+    Args:
+        text (str): The text to print.
+    """
+    terminal_width = get_terminal_width()
+    wrapped_lines = wrap_text(text, terminal_width)
+    
+    for line in wrapped_lines:
+        print(line)
+
+def clear_lines(num_lines: int) -> None:
+    """
+    Clears the specified number of lines from the terminal output.
+    
+    Args:
+        num_lines (int): The number of lines to clear.
+    """
+    for _ in range(num_lines):
+        print("\033[F\033[K", end='')  # Move cursor up and clear the line
+
 
 def makeMatrix(
         pX: int, 

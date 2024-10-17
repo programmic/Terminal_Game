@@ -1,3 +1,14 @@
->init Inmitten des tiefen Nebels eines verregneten Abends stapft [MC] des Abenteuers durch matschige Straßen, die von alten verwitterten Holzhäusern gesäumt sind. Das Ziel? Die Taverne „Zur Kreideneiche“, welche in den Lichtern des Dorfes Lortara fast wie ein Zufluchtsort wirkt. [MC] betretet die willkommene Wärme, welche vondem knisternden Feuer im Kamin ausgestrahlt wird, während mehrere Gestalten an den Tischen trinken, die wenigsten in einem Gespräch vertieft und nicht nur ein misstrauisches Augenpaar findet sich an der zu eben geöffneten Tür wieder. Einer grummelte über die Kälte und das man doch die Tür schließen solle. Über den Tresen hinweg beobachtet ein alter Wirt mit einem aufmerksamen Blick die Gäste, sowie dich. $d: enterBar$~
+>start Inmitten des tiefen Nebels eines verregneten Abends stapft [MC] durch matschige Straßen, die von alten verwitterten Holzhäusern gesäumt sind. [?gender male:Sein female:Ihr nonbinary:They] Ziel war die Taverne „Zur Kreideneiche“, welche in den Lichtern des Dorfes Lortara fast wie ein Zufluchtsort wirkt. [MC] betritt die willkommene Wärme, welche vondem knisternden Feuer im Kamin ausgestrahlt wird, während mehrere Gestalten an den Tischen trinken, die wenigsten in einem Gespräch vertieft und nicht nur ein misstrauisches Augenpaar findet sich an der zu eben geöffneten Tür wieder. Einer grummelte über die Kälte und das man doch die Tür schließen solle. Über den Tresen hinweg beobachtet ein alter Wirt mit einem aufmerksamen Blick die Gäste, sowie dich. &?
+%Gehe zur Bar und trinke etwas|bar
+%Sprich mit dem Barden|bard
+%Setze dich zu der mysteriösen, vermummten Gestalt|magician~
 
-§enterBar: "Sprich mit dem Bartender"
+>bar Du setzt dich zu dem Barkeep, und bestellst einen Drink.&drink~
+
+>talkBarkeep Du redest mit dem Barkeep, erfährst aber nichts relevantes.&umsehen
+
+>drink Nachdem du deinen Drink ausgetrunken hast, siehst du dich erneut in der Taverne um.&umsehen
+
+>umsehen Du schaust dich erneut in der Taverne um.&?
+%Sprich mit dem Barden|bard
+%Setze dich zu der mysteriösen, vermummten Gestalt|magician~
