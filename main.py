@@ -226,8 +226,10 @@ def resolveAliases(segment: str, player_attributes: dict) -> str:
         resolved_text = segment[:placeholder_start]  # Text before the placeholder
         varName = options[0]
         if varName in player_attributes.keys():
-            for option in options:
-                colors.printYellow(option)
+            for option in options[1:]:
+                varVal = player_attributes[varName].lower()
+                if option.split(":")[0] == varVal:
+                    resolved_text += str(option.split(":")[1])
         else:
             resolved_text += ""  # Fallback if no matching key
             colors.printRed("Value Replacement Error:")
