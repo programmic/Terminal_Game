@@ -239,8 +239,7 @@ def resolveAliases(segment: str, player_attributes: dict) -> str:
         segment = resolved_text  # Update segment for further processing
 
         placeholder_start = segment.find("[?")  # Find the next placeholder
-
-    return segment
+    return segment.replace("[MC]", player_attributes["name"])
 
 def printText(t: str) -> None:
     """
@@ -260,11 +259,11 @@ def main_game_loop(save_content: str) -> None:
     """
     global attributes
     attributes = {
-        "gender":"Female",
+        "gender":"nonbinary",
         "name":"Ailene"
         }
-    #current_segment = ">gender"  # Start point of the game
-    current_segment = ">start"
+    current_segment = ">gender"  # Start point of the game
+    #current_segment = ">start"
 
     while current_segment:
         segment_text = get_segment(save_content, current_segment)
@@ -305,8 +304,8 @@ def main_game_loop(save_content: str) -> None:
 
 if __name__ == "__main__":
     # Load the save file
-    #save_file_content = load_save_file("Story/charcaterSetup.txt")
-    save_file_content = load_save_file("Story/prolog.txt")
+    save_file_content = load_save_file("Story/charcaterSetup.txt")
+    #save_file_content = load_save_file("Story/prolog.txt")
     
     # Start the game loop
     clearTerminal()
