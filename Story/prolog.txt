@@ -1,27 +1,27 @@
->start Inmitten des tiefen Nebels eines verregneten Abends stapft [MC] durch matschige Straßen, die von alten verwitterten Holzhäusern gesäumt sind. [?gender male:Sein female:Ihr nonbinary:They] Ziel war die Taverne "Zur Kreideneiche", welche in den Lichtern des Dorfes Lortara fast wie ein Zufluchtsort wirkt. [MC] betritt die willkommene Wärme, welche vondem knisternden Feuer im Kamin ausgestrahlt wird, während mehrere Gestalten an den Tischen trinken, die wenigsten in einem Gespräch vertieft und nicht nur ein misstrauisches Augenpaar findet sich an der zu eben geöffneten Tür wieder. Einer grummelte über die Kälte und das man doch die Tür schließen solle. Über den Tresen hinweg beobachtet ein alter Wirt mit einem aufmerksamen Blick die Gäste, sowie dich.
-&?
+->start Inmitten des tiefen Nebels eines verregneten Abends stapft [MC] durch matschige Straßen, die von alten verwitterten Holzhäusern gesäumt sind. [?gender male|Sein female|Ihr nonbinary|They] Ziel war die Taverne "Zur Kreideneiche", welche in den Lichtern des Dorfes Lortara fast wie ein Zufluchtsort wirkt. [MC] betritt die willkommene Wärme, welche vondem knisternden Feuer im Kamin ausgestrahlt wird, während mehrere Gestalten an den Tischen trinken, die wenigsten in einem Gespräch vertieft und nicht nur ein misstrauisches Augenpaar findet sich an der zu eben geöffneten Tür wieder. Einer grummelte über die Kälte und das man doch die Tür schließen solle. Über den Tresen hinweg beobachtet ein alter Wirt mit einem aufmerksamen Blick die Gäste, sowie dich.
+&/
 %Gehe zur Bar und trinke etwas|bar
 %Sprich mit dem Barden|bard
 %Setze dich zu der mysteriösen, vermummten Gestalt|magician~
 
 
->bar Du setzt dich zu dem Barkeep, und bestellst einen Drink.&?
+->bar Du setzt dich zu dem Barkeep, und bestellst einen Drink.&/
 %Rede mit dem Barkeep|talkBarkeep
 %Austrinken|drink~
 
 
->talkBarkeep Du redest mit dem Barkeep, erfährst aber nichts relevantes.&drink~
+->talkBarkeep Du redest mit dem Barkeep, erfährst aber nichts relevantes.&drink~
 
 
->drink Nachdem du deinen Drink ausgetrunken hast, siehst du dich erneut in der Taverne um.&umsehen~
+->drink Nachdem du deinen Drink ausgetrunken hast, siehst du dich erneut in der Taverne um.&umsehen~
 
 
->umsehen Du schaust dich erneut in der Taverne um.&?
+->umsehen Du schaust dich erneut in der Taverne um.&/
 %Sprich mit dem Barden|bard
 %Setze dich zu der mysteriösen, vermummten Gestalt|magician~
 
 
->bard Als du dem Barden nähertrittst, kannst du sein Lied verstehen...
+->bard Als du dem Barden nähertrittst, kannst du sein Lied verstehen...
     In einem gold’nen Zeitalter, längst verweht,
     Als Valoria in hellstem Glanze steht,
     Ein junger König, Andorax genannt,
@@ -58,7 +58,7 @@
     Von einer Zukunft, die in Dunkelheit schwingt. &umsehen~
 
 
->magician Als du dich in richtung des Vermummten wendest, erhebt sich dieser aus seiner Nische in der Ecke der Taverne. Er kommt langsam auf dich zu, und obwohl das Feuer in der Nähe leuchtet, scheint sein Gesicht fast unsichtbar zu bleiben, wie von einer unsichtbaren Kraft verschleiert. Er setzt sich wortlos dir gegenüber. Seine Stimme ist tief, fast wie das Murmeln des Windes.
+->magician Als du dich in richtung des Vermummten wendest, erhebt sich dieser aus seiner Nische in der Ecke der Taverne. Er kommt langsam auf dich zu, und obwohl das Feuer in der Nähe leuchtet, scheint sein Gesicht fast unsichtbar zu bleiben, wie von einer unsichtbaren Kraft verschleiert. Er setzt sich wortlos dir gegenüber. Seine Stimme ist tief, fast wie das Murmeln des Windes.
 
 "Valoria ist in Gefahr", sagt die Gestalt mit sanfter Dringlichkeit. "Und nur du kannst das Blatt wenden."
 
@@ -67,7 +67,7 @@ Er hebt den Kopf leicht, und unter der Kapuze kannst du einen Funken in seinen A
 "Ich bin Aldaris", sagt er. "Ein Hüter der alten Wege. Ich habe dich hierhergeführt, weil die Zeichen des Schicksals klar sind. Etwas Dunkles erhebt sich. Die alten Flüche erwachen erneut, und das, was einst gebunden war, bricht frei. Es gibt nur wenige, die das Ruder herumreißen können. Du gehörst dazu." &askWizard~
 
 
->askWizard Hast du Fragen?&?
+->askWizard Hast du Fragen?&/
 %"Warum bin ich so wichtig? |warumWichtig
 %"Was bedroht Valoria?" |wasBedroht
 %"Was weißt du über König Andorax?"|wissenKoenig
@@ -77,12 +77,12 @@ Er hebt den Kopf leicht, und unter der Kapuze kannst du einen Funken in seinen A
 %Continue...|magicianContinue~
 
 
->warumWichtig Aldaris lehnt sich leicht zurück, als hätte er mit dieser Frage gerechnet. Ein sanftes Lächeln zeichnet sich unter seiner Kapuze ab.
+->warumWichtig Aldaris lehnt sich leicht zurück, als hätte er mit dieser Frage gerechnet. Ein sanftes Lächeln zeichnet sich unter seiner Kapuze ab.
 
 "Das Schicksal hat immer seine Werkzeuge. Manche werden geboren, um Königreiche zu regieren, andere, um sie zu retten. Doch selten wissen jene, die für große Dinge bestimmt sind, warum sie auserwählt wurden. In deinem Blut fließt ein Erbe, älter als Valoria selbst. Etwas, das du noch nicht verstehst, aber bald erfahren wirst." &askWizard~
 
 
->wasBedroht Aldaris seufzt schwer und stützt seine Hände auf den Tisch. Du spürst die Anspannung in seiner Stimme, als er fortfährt.
+->wasBedroht Aldaris seufzt schwer und stützt seine Hände auf den Tisch. Du spürst die Anspannung in seiner Stimme, als er fortfährt.
 
 "Das Reich steht nicht nur vor einer Invasion von außen, sondern vor etwas weit Schlimmerem. Etwas Altes... eine Macht, die wir geglaubt hatten, für immer verbannt zu haben. Du hast vielleicht schon von den Legenden gehört. Die Klinge von Varesh... sie erwacht."
 
@@ -91,7 +91,7 @@ Er blickt umher, als ob er sicherstellen möchte, dass niemand lauscht, und sein
 "König Andorax... er ist nicht der Mann, der er einst war. Die Klinge... sie flüstert ihm zu. Sie vergiftet sein Herz und seinen Verstand. Wenn niemand eingreift, wird er Valoria ins Verderben stürzen." &askWizard~
 
 
->wissenKoenig Aldaris‘ Blick wird scharf, fast melancholisch. Er scheint kurz in Gedanken zu versinken, bevor er antwortet.
+->wissenKoenig Aldaris‘ Blick wird scharf, fast melancholisch. Er scheint kurz in Gedanken zu versinken, bevor er antwortet.
 
 "Andorax war einst ein großer Mann, ein gerechter König. Er brachte Frieden nach Valoria, stärkte das Land und seine Menschen. Doch etwas hat sich in ihm verändert, seit er von seiner letzten Reise zurückkehrte. Niemand weiß genau, was er in den Tiefen der Berge fand... oder was ihn fand. Aber seitdem ist er nicht mehr derselbe."
 
@@ -100,7 +100,7 @@ Er schüttelt langsam den Kopf.
 "Seine Entscheidungen sind dunkler geworden, seine Gnade seltener. Er regiert mit einer Faust aus Stahl – aber nicht zu seinem eigenen Vorteil, sondern als ob jemand anderes die Fäden zieht." &askWizard~
 
 
->wasKlinge Aldaris hebt eine Hand, als ob er dich warnen will, dieses Thema nicht laut auszusprechen.
+->wasKlinge Aldaris hebt eine Hand, als ob er dich warnen will, dieses Thema nicht laut auszusprechen.
 
 "Varesh... nur wenige wagen es, ihren Namen zu flüstern, geschweige denn die Macht ihrer Klinge zu erwähnen. Sie ist kein gewöhnliches Schwert. Sie ist ein Relikt aus einer Zeit, die selbst die ältesten Legenden kaum noch erinnern. Geschmiedet im Feuer der Dunkelheit und durchtränkt mit dem Blut der Unschuldigen. Sie verleiht unglaubliche Macht, aber zu einem entsetzlichen Preis."
 
@@ -109,7 +109,7 @@ Seine Stimme wird noch leiser.
 "Die, die sie führen, verlieren sich selbst. Ihre Gedanken, ihre Seele... sie gehört dann nur noch der Klinge. Die Klinge führt den Träger, nicht umgekehrt. Andorax... er kämpft einen verlorenen Kampf."&askWizard~
 
 
->wieHelfen Aldaris mustert dich lange, bevor er spricht. Seine Augen blitzen, als ob er dich auf eine verborgene Stärke hin prüft.
+->wieHelfen Aldaris mustert dich lange, bevor er spricht. Seine Augen blitzen, als ob er dich auf eine verborgene Stärke hin prüft.
 
 "Es gibt Kräfte in dieser Welt, die älter sind als die Dunkelheit, die sich nun erhebt. Doch du wirst nicht allein sein. Verbündete warten auf dich, manche nah, manche fern. Du wirst Herausforderungen begegnen, die du dir jetzt noch nicht vorstellen kannst."
 
@@ -118,7 +118,7 @@ Er zieht ein kleines Pergament aus seinem Umhang und schiebt es dir über den Ti
 "Das ist der Schlüssel zu einem uralten Ort. Finde die Ruinen von Eldra’mar, dem vergessenen Tempel. Dort begann diese Geschichte... und dort könnte sie auch enden."&askWizard~
 
 
->werDu Aldaris lächelt leicht, doch es ist ein trauriges Lächeln.
+->werDu Aldaris lächelt leicht, doch es ist ein trauriges Lächeln.
 
 "Wer ich bin, spielt keine Rolle. Nur was ich bewahre. Ich bin einer der letzten Hüter des alten Wissens, ein Erbe einer längst vergessenen Zeit. Mein Name ist in keiner Chronik verzeichnet, und das ist auch gut so."
 
@@ -126,6 +126,6 @@ Sein Blick wird härter.
 
 "Doch du musst mir nicht vertrauen. Du musst nur auf die Zeichen achten. Sie werden dich führen, so wie sie mich zu dir geführt haben."&askWizard~
 
->magicianContinue "Ich habe gesagt, was gesagt werden musste. Der Rest liegt nun bei dir. Wenn du bereit bist, such mich auf... du wirst wissen, wo du mich findest."
+->magicianContinue "Ich habe gesagt, was gesagt werden musste. Der Rest liegt nun bei dir. Wenn du bereit bist, such mich auf... du wirst wissen, wo du mich findest."
 
 Er dreht sich um und verschwindet so schnell im Schatten, dass es beinahe unmöglich scheint, ihm zu folgen. Die Geräusche der Taverne nehmen wieder zu, als wäre nichts geschehen, doch etwas in dir weiß, dass dieses Treffen alles verändert hat.&#Kapitel1~

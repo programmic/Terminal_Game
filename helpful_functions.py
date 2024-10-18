@@ -187,11 +187,6 @@ def printAnimated(text: str, ttw: float = 1.0, sps: int = defaultTextSpeed, mode
     if doLinebrake:
         print()
 
-
-
-
-
-
 def makeMatrix(
         pX: int, 
         pY: int, 

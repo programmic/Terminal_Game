@@ -52,23 +52,17 @@ def extract_options_from_segment(segment: str) -> dict:
     Returns:
         (dict): A dictionary where the key is the displayed option and the value is the segment identifier.
     """
-    options_start = segment.find("&?")
+    options_start = segment.find("&/")
     if options_start == -1:
         return {}
 
     # Find all the options that start with `%`
-    options_part = segment[options_start + 2:]  # Ignore the &? marker
+    options_part = segment[options_start + 2:]  # Ignore the &/ marker
     options = options_part.split("%")
     
     questions = {}
     for option in options:
-        if ":" in option:  # Format expected is "%OptionText:NextSegment"
-            option_text, next_segment = option.split(":")
-            option_text = option_text.strip()
-            next_segment = next_segment.strip()
-            if option_text and next_segment:
-                questions[option_text] = next_segment
-        elif "|" in option:  # For cases where we use "|" like class selection
+        if "|" in option:  # For cases where we use "|" like class selection
             option_text, next_segment = option.split("|")
             option_text = option_text.strip()
             next_segment = next_segment.strip()
@@ -90,7 +84,6 @@ def load_save_file(filename: str) -> str:
     with open(filename, 'r', encoding='utf-8') as file:
         return file.read()
 
-
 def get_segment(content: str, entry_point: str) -> str:
     """
     Gets the relevant segment from the save file content.
@@ -104,7 +97,6 @@ def get_segment(content: str, entry_point: str) -> str:
     """
     return findSegment(content, entry_point)
 
-
 def parse_options(segment: str) -> dict:
     """
     Parses the options in the segment and returns a dictionary of choices.
@@ -115,7 +107,7 @@ def parse_options(segment: str) -> dict:
     Returns:
         (dict): Dictionary of options, where key is the displayed option and value is the next segment identifier.
     """
-    seperator = segment.find("&?")
+    seperator = segment.find("&/")
     if seperator == -1:
         return {}
 
@@ -141,11 +133,20 @@ def handleTextVariables(text: str) -> None:
         
         if "=" in operator:
             var, val = operator.split("=")
+            attributes[var] = val
+        elif "+" in operator:
+            var,val = operator.split("+")
+            attributes[var] = int (attributes[var]) + int(val)
+        elif "-" in operator:
+            var,val = operator.split("-")
+            if int(attributes[var]) - int(val) < 0:
+                raise ValueError(f"Error: Characters stats may not be negative\n{attributes[var]} - {val} = {int(attributes[var]) - int(val)}")
+            attributes[var] = int(attributes[var]) - int(val)
         else:
             var = operator.strip()
             val = cleanInput(f"Enter value for {var}: ")
-        
-        attributes[var] = val
+            attributes[var] = val
+
         text = text[endIdx + 1:]
 
 def display_question_and_get_answer(questions: dict) -> str:
@@ -217,8 +218,6 @@ def resolveFileLink(segment: str) -> str:
         file_end = len(segment)  # In case the filename is the last thing in the segment
     return segment[file_start:file_end].strip()
 
-
-
 def resolveAliases(segment: str, player_attributes: dict) -> str:
     """
     Resolves any placeholders in the segment based on player attributes.
@@ -234,8 +233,8 @@ def resolveAliases(segment: str, player_attributes: dict) -> str:
     while placeholder_start != -1:
         placeholder_end = segment.find("]", placeholder_start)
         if placeholder_end == -1:
-            colors.printRed("Value Replacement Error:\nNo closing bracket found")
-            break  # No closing bracket found
+            raise ValueError(f"{colors.red}Value Replacement Error:\nNo closing bracket found{colors.clear}")
+            # No closing bracket found
 
         # Extract the placeholder text
         placeholder_text = segment[placeholder_start + 2:placeholder_end]  # Ignore the "[?" part
@@ -273,7 +272,6 @@ def printText(t: str, ttw: float = 1.0, sps: int = 20, mode="sps") -> None:
     text = f"\n{resolveAliases(t.split('&')[0], attributes)}"
     printAnimated(text, ttw, sps, mode)
     
-
 def main_game_loop(save_content: str) -> None:
     """
     Game loop with text segments and reliable parsing for options.
@@ -285,9 +283,15 @@ def main_game_loop(save_content: str) -> None:
     attributes = {
         "gender":"Undefined",
         "name":"Undefined",
-        "class":"None"
+        "class":"None",
+        "money":0,
+        "health":150,
+        "mana":75,
+        "damage_unarmed":5,
+        "intelligence":10,
+        "strength":10
         } 
-    current_segment = ">start" # Start point of the game
+    current_segment = "->start" # Start point of the game
 
     while current_segment:
         segment_text = get_segment(save_content, current_segment)
@@ -299,7 +303,7 @@ def main_game_loop(save_content: str) -> None:
         # Print the segment text directly
         printText(segment_text)
 
-        if "&?" in segment_text:  # Check if the segment contains options
+        if "&/" in segment_text:  # Check if the segment contains options
             if "&*" in segment_text: colors.printRed("Error: Text input within MCQ")
             questions = extract_options_from_segment(segment_text)
             if not questions:
@@ -311,22 +315,21 @@ def main_game_loop(save_content: str) -> None:
                 print("No valid next segment found. Exiting.")
                 break
 
-            current_segment = f">{next_segment}"
+            current_segment = f"->{next_segment}"
         else:
             if "&*" in segment_text:
                 handleTextVariables(segment_text)
             # No options, chain to next segment without clearing
             next_segment_marker = segment_text.split("&")[-1].strip()
-            current_segment = f">{next_segment_marker}"
+            current_segment = f"->{next_segment_marker}"
 
         if "&#" in segment_text:
             linked_file = resolveFileLink(segment_text)
             new_file_content = load_save_file(f"Story/{linked_file}.txt")
             if new_file_content:
                 save_content = new_file_content  # Replace content with the new file's content
-                current_segment = ">start"  # Start the game from the new file's first segment
+                current_segment = "->start"  # Start the game from the new file's first segment
                 continue  # Restart the loop with the new content
-
 
 if __name__ == "__main__":
     # Load the save file
