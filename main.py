@@ -1,8 +1,8 @@
 from helpful_functions import *
 
-def cleanInput(text: str = "Pick your Choice: ") -> int:
-    out = input(text)
-    clearLastTerminalLine()
+def cleanInput(prompt="Enter value: ") -> int:
+    out = input(prompt)  # Show a prompt message for the user
+    clearLastTerminalLine()  # Optional: remove the input line from the terminal display
     return out
 
 def consoleFormat(text: str | list[str]) -> str | list[str]:
@@ -130,6 +130,23 @@ def parse_options(segment: str) -> dict:
 
     return questions
 
+def handleTextVariables(text: str) -> None:
+    while "&*" in text:
+        startIdx = text.find("&*") + 2
+        endIdx = text.find("*", startIdx)
+        if endIdx == -1:
+            raise SyntaxError("Error: No closing '*' found.")
+        
+        operator = text[startIdx:endIdx]
+        
+        if "=" in operator:
+            var, val = operator.split("=")
+        else:
+            var = operator.strip()
+            val = cleanInput(f"Enter value for {var}: ")
+        
+        attributes[var] = val
+        text = text[endIdx + 1:]
 
 def display_question_and_get_answer(questions: dict) -> str:
     """
@@ -149,7 +166,7 @@ def display_question_and_get_answer(questions: dict) -> str:
     lines_printed = 0
     for idx, option in enumerate(questions.keys(), 1):
         option_text = f"{colors.blue}{' '*3}[{lenformat(idx, len(str(len(questions.keys()))), place='front')}]{colors.clear} {option}"
-        print(option_text)
+        printAnimated(option_text, sps=25)
         # Calculate how many lines this option will take up considering wrapping
         lines_printed += calculate_wrapped_lines(option_text, terminal_width)
 
@@ -157,7 +174,8 @@ def display_question_and_get_answer(questions: dict) -> str:
     max_attempts = 7
 
     while attempts < max_attempts:
-        playerSel = cleanInput("Pick your choice: ")
+        printAnimated("Choose your option ", sps= 25, doLinebrake=False)
+        playerSel = cleanInput("")
         try: # Try Index Keying
             playerSel = int(playerSel) - 1  # Convert to zero-indexed
             if 0 <= playerSel < len(questions):
@@ -177,12 +195,12 @@ def display_question_and_get_answer(questions: dict) -> str:
                         return questions[key]
 
         attempts += 1
-        print(f"Invalid input. {max_attempts - attempts} attempts left.")
+        print(f"Invalid input. {max_attempts - attempts} attempts left.",end="\r")
 
     print("Maximum attempts reached.")
     return ""
 
-def check_for_file_link(segment: str) -> str:
+def resolveFileLink(segment: str) -> str:
     """
     Checks if the segment contains a file link operator (&#) and returns the file name if present.
 
@@ -192,13 +210,14 @@ def check_for_file_link(segment: str) -> str:
     Returns:
         (str): The name of the file to load if &# is present, else an empty string.
     """
-    if "&#" in segment:
-        file_start = segment.find("&#") + len("&#")
-        file_end = segment.find(" ", file_start)
-        if file_end == -1:
-            file_end = len(segment)  # In case the filename is the last thing in the segment
-        return segment[file_start:file_end].strip()
-    return ""
+    
+    file_start = segment.find("&#") + len("&#")
+    file_end = segment.find(" ", file_start)
+    if file_end == -1:
+        file_end = len(segment)  # In case the filename is the last thing in the segment
+    return segment[file_start:file_end].strip()
+
+
 
 def resolveAliases(segment: str, player_attributes: dict) -> str:
     """
@@ -241,14 +260,19 @@ def resolveAliases(segment: str, player_attributes: dict) -> str:
         placeholder_start = segment.find("[?")  # Find the next placeholder
     return segment.replace("[MC]", player_attributes["name"])
 
-def printText(t: str) -> None:
+def printText(t: str, ttw: float = 1.0, sps: int = 20, mode="sps") -> None:
     """
-    Directly prints the text without wrapping.
-    
+    Writes the given text, niceley formated.
+
     Args:
-        t (str): The text to print.
+        t (str): text
+        ttw (float, optional): Total Time Waited. Defaults to 1.0.
+        sps (int, optional): Symbols per second. Defaults to 8.
+        mode (str, optional): Determines. Defaults to "sps". Accepst: "sps" (symbols per second), "ttw" (total time waited)
     """
-    print(f"\n{resolveAliases(t.split('&')[0], attributes)}")  # Display the text before any '&' character
+    text = f"\n{resolveAliases(t.split('&')[0], attributes)}"
+    printAnimated(text, ttw, sps, mode)
+    
 
 def main_game_loop(save_content: str) -> None:
     """
@@ -259,11 +283,11 @@ def main_game_loop(save_content: str) -> None:
     """
     global attributes
     attributes = {
-        "gender":"nonbinary",
-        "name":"Ailene"
-        }
-    current_segment = ">gender"  # Start point of the game
-    #current_segment = ">start"
+        "gender":"Undefined",
+        "name":"Undefined",
+        "class":"None"
+        } 
+    current_segment = ">start" # Start point of the game
 
     while current_segment:
         segment_text = get_segment(save_content, current_segment)
@@ -275,16 +299,8 @@ def main_game_loop(save_content: str) -> None:
         # Print the segment text directly
         printText(segment_text)
 
-        # Check for file link operator (&#)
-        linked_file = check_for_file_link(segment_text)
-        if linked_file:
-            new_file_content = load_save_file(f"Story/{linked_file}.txt")
-            if new_file_content:
-                save_content = new_file_content  # Replace content with the new file's content
-                current_segment = ">start"  # Start the game from the new file's first segment
-                continue  # Restart the loop with the new content
-
         if "&?" in segment_text:  # Check if the segment contains options
+            if "&*" in segment_text: colors.printRed("Error: Text input within MCQ")
             questions = extract_options_from_segment(segment_text)
             if not questions:
                 print("No valid options found. Exiting.")
@@ -297,9 +313,19 @@ def main_game_loop(save_content: str) -> None:
 
             current_segment = f">{next_segment}"
         else:
+            if "&*" in segment_text:
+                handleTextVariables(segment_text)
             # No options, chain to next segment without clearing
             next_segment_marker = segment_text.split("&")[-1].strip()
             current_segment = f">{next_segment_marker}"
+
+        if "&#" in segment_text:
+            linked_file = resolveFileLink(segment_text)
+            new_file_content = load_save_file(f"Story/{linked_file}.txt")
+            if new_file_content:
+                save_content = new_file_content  # Replace content with the new file's content
+                current_segment = ">start"  # Start the game from the new file's first segment
+                continue  # Restart the loop with the new content
 
 
 if __name__ == "__main__":

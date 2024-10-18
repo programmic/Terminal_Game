@@ -7,13 +7,13 @@
 
 >bar Du setzt dich zu dem Barkeep, und bestellst einen Drink.&?
 %Rede mit dem Barkeep|talkBarkeep
-%Austrinken|drink
+%Austrinken|drink~
 
 
->talkBarkeep Du redest mit dem Barkeep, erfährst aber nichts relevantes.&drink
+>talkBarkeep Du redest mit dem Barkeep, erfährst aber nichts relevantes.&drink~
 
 
->drink Nachdem du deinen Drink ausgetrunken hast, siehst du dich erneut in der Taverne um.&umsehen
+>drink Nachdem du deinen Drink ausgetrunken hast, siehst du dich erneut in der Taverne um.&umsehen~
 
 
 >umsehen Du schaust dich erneut in der Taverne um.&?
@@ -22,40 +22,40 @@
 
 
 >bard Als du dem Barden nähertrittst, kannst du sein Lied verstehen...
-In einem gold’nen Zeitalter, längst verweht,
-Als Valoria in hellstem Glanze steht,
-Ein junger König, Andorax genannt,
-Mit weisem Blick und gütiger Hand.
-
-Sein Reich erblühte, Felder trugen Frucht,
-Magier webten Kunst aus Sternenflucht.
-Die Menschen sangen frei von Leid und Not,
-Die Klinge trug den Ruhm und nicht den Tod.
-
-Doch tief im dunklen Wald, in alter Gruft,
-Ein Flüstern trieb ihn fort, wie Nebels Luft.
-Die Alten warnten: "Geh dort nicht allein,
-Wo einst die Götter schufen Trug und Schein."
-
-Doch König Andorax, im Herzen kühn,
-Verfolgte das Geheimnis, ohne Ruhm.
-Und fand er tief im Erdinneren Grund
-Ein Schwert aus Flammen – die Macht ungesund.
-
-Varesh, die Klinge, finster und verdammt,
-Verheißt die Macht, doch dunkles Leid entflammt.
-Er hob das Schwert, es sang ihm süß ins Ohr:
-"Herrscher über Zeit und Raum, regier’ empor!"
-
-Mit jedem Hieb, den Andorax nun führte,
-Verlor er sich, sein Herz sich kalt verhärtete.
-Die Krone strahlt noch immer im hellen Schein,
-Doch in der Tiefe lauert Fluch und Pein.
-
-Nun herrscht der König, mächtig, unbesiegt,
-Doch fragen die Weisen, ob das Licht noch siegt.
-In Schatten spricht man, was der Barde nicht singt,
-Von einer Zukunft, die in Dunkelheit schwingt. &umsehen~
+    In einem gold’nen Zeitalter, längst verweht,
+    Als Valoria in hellstem Glanze steht,
+    Ein junger König, Andorax genannt,
+    Mit weisem Blick und gütiger Hand.
+    
+    Sein Reich erblühte, Felder trugen Frucht,
+    Magier webten Kunst aus Sternenflucht.
+    Die Menschen sangen frei von Leid und Not,
+    Die Klinge trug den Ruhm und nicht den Tod.
+    
+    Doch tief im dunklen Wald, in alter Gruft,
+    Ein Flüstern trieb ihn fort, wie Nebels Luft.
+    Die Alten warnten: "Geh dort nicht allein,
+    Wo einst die Götter schufen Trug und Schein."
+    
+    Doch König Andorax, im Herzen kühn,
+    Verfolgte das Geheimnis, ohne Ruhm.
+    Und fand er tief im Erdinneren Grund
+    Ein Schwert aus Flammen – die Macht ungesund.
+    
+    Varesh, die Klinge, finster und verdammt,
+    Verheißt die Macht, doch dunkles Leid entflammt.
+    Er hob das Schwert, es sang ihm süß ins Ohr:
+    "Herrscher über Zeit und Raum, regier’ empor!"
+    
+    Mit jedem Hieb, den Andorax nun führte,
+    Verlor er sich, sein Herz sich kalt verhärtete.
+    Die Krone strahlt noch immer im hellen Schein,
+    Doch in der Tiefe lauert Fluch und Pein.
+    
+    Nun herrscht der König, mächtig, unbesiegt,
+    Doch fragen die Weisen, ob das Licht noch siegt.
+    In Schatten spricht man, was der Barde nicht singt,
+    Von einer Zukunft, die in Dunkelheit schwingt. &umsehen~
 
 
 >magician Als du dich in richtung des Vermummten wendest, erhebt sich dieser aus seiner Nische in der Ecke der Taverne. Er kommt langsam auf dich zu, und obwohl das Feuer in der Nähe leuchtet, scheint sein Gesicht fast unsichtbar zu bleiben, wie von einer unsichtbaren Kraft verschleiert. Er setzt sich wortlos dir gegenüber. Seine Stimme ist tief, fast wie das Murmeln des Windes.

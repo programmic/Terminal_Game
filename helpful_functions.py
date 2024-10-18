@@ -3,9 +3,12 @@ from colorsys import hsv_to_rgb
 from math import sqrt, acos, exp
 from functools import wraps
 import time
+from decimal import Decimal
 import os
 
 clear = "\033c"
+defaultTextSpeed = 150 # symbols/second
+
 
 def time_it(func):
     """
@@ -155,6 +158,38 @@ def clear_lines(num_lines: int) -> None:
     """
     for _ in range(num_lines):
         print("\033[F\033[K", end='')  # Move cursor up and clear the line
+
+def printAnimated(text: str, ttw: float = 1.0, sps: int = defaultTextSpeed, mode="ttw", doLinebrake: bool = True) -> None:
+    """
+    Animates writing of text.
+
+    Args:
+        text (str): Text to animate.
+        ttw (float, optional): Total Time Waited. Defaults to 1.0.
+        sps (int, optional): Symbols per second. Defaults to 150.
+        mode (str, optional): Determines the mode. Defaults to "sps". Accepts: "sps" (symbols per second), "ttw" (total time waited).
+        doLinebrake (bool, optional): Whether to add a line break after text. Defaults to True.
+    """
+    chars = len(text)
+    if mode == "sps":
+        if sps <= 0:
+            raise ValueError(f"Error: sps (symbols per second) must be greater than zero (is {sps})")
+        # Using Decimal to ensure precision
+        wait = Decimal('1') / Decimal(sps)  # Calculate wait time per character based on characters per second
+    elif mode == "ttw":
+        wait = Decimal(str(ttw)) / Decimal(chars)  # Time between each symbol
+    else:
+        raise ValueError(f"Error: Unexpected print type while trying to print out text:\n{text}")
+
+    for i in text:
+        print(i, end="", flush=True)
+        time.sleep(float(wait))  # Convert back to float for time.sleep to work
+    if doLinebrake:
+        print()
+
+
+
+
 
 
 def makeMatrix(
