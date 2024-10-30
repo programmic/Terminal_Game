@@ -1,0 +1,48 @@
+ID=#001
+Name=Blutsturm-Axt
+Typ=Zweihändige Axt
+Material=Geschwärzter Drachensilberstahl
+Seltenheit=Legendär
+
+SchadenMin=75
+SchadenMax=95
+Krit=25
+KritDMG=x2
+Speed=Langsam
+Reichweite=Kurz
+Eigenschaften=Leach,Bloodlust,Thunderblade
+Geschichte=Diese mächtige Axt gehörte einst einem legendären Berserker, der seine Feinde mit einer unstillbaren Gier nach Blut und Chaos niederstreckte. Die Klinge flüstert leise den Namen ihrer Opfer, und manche sagen, dass sie ein Eigenleben führt und sich selbst in Richtung des nächsten Gegners bewegt.
+
+$
+
+ID=#002
+Name=Seelenspalter
+Typ=Einhand-Schwert
+Material=Runenverzierter Seelenstahl
+Seltenheit=Episch
+
+SchadenMin=40
+SchadenMax=60
+Krit=15
+KritDMG=x1.5
+Speed=Schnell
+Reichweite=Mittel
+Eigenschaften=Soulbound,DrainLife,SpectralSlash
+Geschichte=Das Schwert Seelenspalter wurde von den Ältesten geschmiedet, um die Barriere zwischen der Welt der Lebenden und der Geister zu durchbrechen. Jeder Treffer leitet einen Teil der Seele des Opfers in die Klinge, was sie unnatürlich scharf und gefährlich macht. Der Legende nach kann der Träger die Stimmen seiner besiegten Feinde hören, die ihm im Kampf zur Seite stehen.
+
+$
+
+ID=#003
+Name=Flammenstachel
+Typ=Langbogen
+Material=Verstärktes Obsidianholz
+Seltenheit=Selten
+
+SchadenMin=30
+SchadenMax=55
+Krit=20
+KritDMG=x2
+Speed=Normal
+Reichweite=Weit
+Eigenschaften=Pierce,Ignite,FlameArrow
+Geschichte=Der Flammenstachel wurde in den Lavaöfen der Feuerinseln geschmiedet und mit dem Segen des Vulkan-Gottes versehen. Pfeile, die aus diesem Bogen abgeschossen werden, entzünden sich in der Luft und durchbohren die Verteidigungen des Feindes, wobei sie brennende Wunden hinterlassen. Die Magie des Bogens schwächt jedoch mit der Zeit nach jedem Schuss, weshalb er nur von erfahrenen Bogenschützen verwendet werden sollte.

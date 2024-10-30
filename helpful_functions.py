@@ -30,7 +30,7 @@ def time_it(func):
         return result  # Return the original function's result
     return wrapper
 
-def readFile(pName: str, pNr: int, extension: str = ".txt") -> list[str]:
+def readFile(pName: str, pNr: int | None = None, extension: str = ".txt", split: bool = True) -> list[str]:
     """
     Reads a file ending with a number, usefull when multible similar files are in use, like different tasks or configs
 
@@ -43,9 +43,13 @@ def readFile(pName: str, pNr: int, extension: str = ".txt") -> list[str]:
     Returns:
         Array: array of Strings, each String a line
     """
-    dateiname = pName + str(pNr) + extension
+    if pNr:
+        dateiname = pName + str(pNr) + extension
+    else:
+        dateiname = pName + extension
     with open(dateiname, "r", encoding = "utf-8") as data:
-        tmp = data.read().split("\n")
+        tmp = data.read()
+        if split: tmp = tmp.split("\n")
         ausgabe = []
         for i in tmp:
             if not i == "":
