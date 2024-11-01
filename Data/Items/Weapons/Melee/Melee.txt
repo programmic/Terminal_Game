@@ -27,7 +27,7 @@ Krit=15
 KritDMG=x1.5
 Speed=Schnell
 Reichweite=Mittel
-Eigenschaften=Soulbound,DrainLife,SpectralSlash
+Eigenschaften=Soulbound,Leach,SpectralSlash
 Geschichte=Das Schwert Seelenspalter wurde von den Ältesten geschmiedet, um die Barriere zwischen der Welt der Lebenden und der Geister zu durchbrechen. Jeder Treffer leitet einen Teil der Seele des Opfers in die Klinge, was sie unnatürlich scharf und gefährlich macht. Der Legende nach kann der Träger die Stimmen seiner besiegten Feinde hören, die ihm im Kampf zur Seite stehen.
 
 $

@@ -63,19 +63,28 @@ def lenformat( pInput: str | int, pDesiredLength: int, character: str = " ", pla
 
     Args:
         pInput (string, int): The text that is to be formated
-        pDesiredLength (int): Amount of characters the text should occupy
-        character (str, optional): Characters used to fill blank space.\nDefaults to " ".
+        pDesiredLength (int): Amount of characters the text should occupy in total
+        character (str, optional): Characters used to fill blank space. Defaults to ' '.
         place (str, optional): Defines wether characters should be placed in front or behind text.\n
-            Accepts: "front", "back"\n
-                Defaults to "back"
+            Accepts: 
+                'front' / 'f'
+                'back' / 'b'
+                'brace' / 'br' / 'center' / 'c'
+            Defaults to 'back'
 
     Returns:
-        String: String, formated to fit your needs
+        String: String, formated
     """
-    if place == "back":
+    if len(pInput) > pDesiredLength:
+        raise Warning ("Warning: Input text exceeded desired length.")
+    if place == "back" or place == "b":
         return str(str(pInput) + str(character * int(int(pDesiredLength) - len(str(pInput)))))
-    elif place == "front":
+    elif place == "front" or place == "f":
         return str(character * int(int(pDesiredLength) - len(str(pInput)))) + str(str(pInput))
+    elif place == "brace" or place == "br" or place == "center" or place == "c":
+        return
+    else:
+        raise SyntaxError ( f"Error: unsupported place type used in 'lenformat': {place}" )
     
 def progress(percentage: float | int, length: int, empty: str = "-", filled: str = "#", braces: str = "[]"):
     if braces == " " or braces == "": braces = "  "
