@@ -290,7 +290,9 @@ def main_game_loop(save_content: str) -> None:
         "damage_unarmed":5,
         "intelligence":10,
         "strength":10
-        } 
+        }
+    global enemys
+    enemys: list = []
     current_segment = "->start" # Start point of the game
 
     while current_segment:
