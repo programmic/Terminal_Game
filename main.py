@@ -11,8 +11,8 @@ def consoleFormat(text: str | list[str]) -> str | list[str]:
     if isinstance(text, str):
         return text.translate(delete)  # Remove \n from the string
     elif isinstance(text, list):
-        newlist = [i.translate(delete) for i in text]
-        return newlist
+        newList = [i.translate(delete) for i in text]
+        return newList
     else:
         raise TypeError(f"Input given was {type(text)}, not str / list[str]\n{text}")
     
@@ -108,11 +108,11 @@ def parse_options(segment: str) -> dict:
     Returns:
         (dict): Dictionary of options, where key is the displayed option and value is the next segment identifier.
     """
-    seperator = segment.find("&/")
-    if seperator == -1:
+    separator = segment.find("&/")
+    if separator == -1:
         return {}
 
-    options = consoleFormat(segment[seperator + 2:]).split("%")
+    options = consoleFormat(segment[separator + 2:]).split("%")
     options = list(filter(None, options))
 
     questions = {}
@@ -292,9 +292,9 @@ def main_game_loop(save_content: str) -> None:
         "intelligence":10,
         "strength":10
         }
-    global enemys
-    enemys: list = []
-    current_segment = "->start" # Start point of the game
+    global entity
+    entity = []
+    current_segment = ">start" # Start point of the game
 
     while current_segment:
         segment_text = get_segment(save_content, current_segment)
@@ -318,25 +318,25 @@ def main_game_loop(save_content: str) -> None:
                 print("No valid next segment found. Exiting.")
                 break
 
-            current_segment = f"->{next_segment}"
+            current_segment = f">{next_segment}"
         else:
             if "&*" in segment_text:
                 handleTextVariables(segment_text)
             # No options, chain to next segment without clearing
             next_segment_marker = segment_text.split("&")[-1].strip()
-            current_segment = f"->{next_segment_marker}"
+            current_segment = f">{next_segment_marker}"
 
         if "&#" in segment_text:
             linked_file = resolveFileLink(segment_text)
             new_file_content = load_save_file(f"Story/{linked_file}.txt")
             if new_file_content:
                 save_content = new_file_content  # Replace content with the new file's content
-                current_segment = "->start"  # Start the game from the new file's first segment
+                current_segment = ">start"  # Start the game from the new file's first segment
                 continue  # Restart the loop with the new content
 
 if __name__ == "__main__":
     # Load the save file
-    save_file_content = load_save_file("Story/charcaterSetup.txt")
+    save_file_content = load_save_file("Story/characterSetup.txt")
     #save_file_content = load_save_file("Story/prolog.txt")
     
     # Start the game loop

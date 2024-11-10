@@ -1,0 +1,29 @@
+>start Wilkommen zu diesem Spiel. Zunächst müssen wir dir einen Charakter erstellen.&gender~
+
+>gender Bitte wähle dein Geschlecht &/
+%Female|genderFemale
+%Male|genderMale
+%Nonbinary|genderNonBinary~
+
+>genderMale Dein Geschlecht wurde erfolgreich auf "Männlich" gesetzt &*gender=male*&class~
+
+>genderFemale Dein Geschlecht wurde erfolgreich auf "Weiblich" gesetzt &*gender=female*&class~
+
+>genderNonBinary Dein Geschlecht wurde erfolgreich auf "Non-binary" gesetzt &*gender=nonbinary*&class~
+
+
+>class Bitte wähle deine Klasse &/
+%Schüzte|classRanger
+%Magier|classSpellCaster
+%Ritter|classKnight
+%Dieb|classRauge~
+
+>classRanger &*class=ranger*&*health=175* Du entscheidest dich, dich als Bogenschütze zu trainieren.&name~
+
+>classSpellCaster &*class=caster*&*mana=250* Du widmest dich den Studien der arkanen Künste&name~
+
+>classKnight &*class=knight*&*health=250*&*strength=15* Als die noble Person, die du bist, entscheidest du dich, Ein Ritter zu werden. &name~
+
+>classRauge -DESCRIPTION TEXT HERE- &name~
+
+>name &*name*Bitte trage hier deinen Namen ein  &#prolog~
