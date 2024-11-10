@@ -1,4 +1,5 @@
 from helpful_functions import *
+import json
 
 def cleanInput(prompt="Enter value: ") -> int:
     out = input(prompt)  # Show a prompt message for the user
