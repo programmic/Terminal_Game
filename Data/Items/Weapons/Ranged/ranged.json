@@ -1,0 +1,17 @@
+[
+    {
+        "ID": "#003",
+        "Name": "Flammenstachel",
+        "Typ": "Langbogen",
+        "Material": "Verstärktes Obsidianholz",
+        "Seltenheit": "Selten",
+        "SchadenMin": "30",
+        "SchadenMax": "55",
+        "Krit": "20",
+        "KritDMG": "x2",
+        "Speed": "Normal",
+        "Reichweite": "Weit",
+        "Eigenschaften": ["Pierce", "Ignite", "FlameArrow"],
+        "Geschichte": "Der Flammenstachel wurde in den Lavaöfen der Feuerinseln geschmiedet und mit dem Segen des Vulkan-Gottes versehen. Pfeile, die aus diesem Bogen abgeschossen werden, entzünden sich in der Luft und durchbohren die Verteidigungen des Feindes, wobei sie brennende Wunden hinterlassen. Die Magie des Bogens schwächt jedoch mit der Zeit nach jedem Schuss, weshalb er nur von erfahrenen Bogenschützen verwendet werden sollte."
+    }
+]

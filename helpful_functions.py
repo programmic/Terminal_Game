@@ -5,6 +5,8 @@ from functools import wraps
 import time
 from decimal import Decimal
 import os
+import shutil
+import sys
 
 clear = "\033c"
 defaultTextSpeed = 150 # symbols/second
@@ -55,7 +57,6 @@ def readFile( pName: str, pNr: int | None = None, extension: str = ".txt", split
             if not i == "":
                 ausgabe.append( i )
     return ausgabe
-
 
 def lenformat( pInput: str | int, pDesiredLength: int, character: str = " ", place: str = "back" ) -> int:
     """
@@ -171,38 +172,45 @@ def clear_lines( num_lines: int ) -> None:
     for _ in range( num_lines ):
         print( "\033[F\033[K", end='' )  # Move cursor up and clear the line
 
-def printAnimated( text: str, ttw: float = 1.0, sps: int = defaultTextSpeed, mode="ttw", doLinebrake: bool = True ) -> None:
+def printAnimated(text: str, ttw: float = 1.0, sps: int = 150, mode="ttw", doLineBreak: bool = False) -> None:
     """
-    Animates writing of text.
+    Animates writing of text to the terminal on a single line.
 
     Args:
-        text ( str ): Text to animate.
-        ttw ( float, optional ): Total Time Waited. Defaults to 1.0.
-        sps ( int, optional ): Symbols per second. Defaults to 150.
-        mode ( str, optional ): Determines the mode. Accepts:
-            'sps' ( symbols per second )
-            'ttw' ( total time waited )  < Default
-        doLinebrake ( bool, optional ): Whether to add a line break after text. Defaults to True.
+        text (str): Text to animate.
+        ttw (float, optional): Total Time Waited. Defaults to 1.0.
+        sps (int, optional): Symbols per second. Defaults to 150.
+        mode (str, optional): Determines the mode. Accepts:
+            'sps' (symbols per second)
+            'ttw' (total time waited)  < Default
+        doLineBreak (bool, optional): Whether to add a line break after text. Defaults to True.
     """
-    chars = len( text )
+    chars = len(text)
+
+    # Determine wait time per character
     if mode == "sps":
         if sps <= 0:
-            raise ValueError( f"Error: sps ( symbols per second ) must be greater than zero ( is {sps} )" )
-        # Using Decimal to ensure precision
-        wait = Decimal( '1' ) / Decimal( sps )  # Calculate wait time per character based on characters per second
+            raise ValueError(f"Error: sps (symbols per second) must be greater than zero (is {sps})")
+        wait = Decimal('1') / Decimal(sps)
     elif mode == "ttw":
-        wait = Decimal( str( ttw ) ) / Decimal( chars )  # Time between each symbol
+        wait = Decimal(str(ttw)) / Decimal(chars)
     else:
-        raise ValueError( f"Error: Unexpected print type ( {mode} ) while trying to print out text:\n{text}" )
+        raise ValueError(f"Error: Unexpected print type ({mode}) while trying to print out text:\n{text}")
 
-    for i in text:
-        print( i, end="")
-        time.sleep( float( wait ) )  # Convert back to float for time.sleep to work
-        print("", end="", flush=True)
-    if doLinebrake:
-        print( )
+    # Print each character with animation, resetting to the start of the line
+    for i in range(chars):
+        # Clear the current line, return to the start of the line, and print updated text
+        sys.stdout.write("\r\033[K" + text[:i+1])  # Clear line from cursor to end, then print up to current character
+        sys.stdout.flush()  # Flush the output to ensure it's displayed immediately
+        time.sleep(float(wait))  # Wait before showing the next character
 
-    #TODO: Add in Line clearing (after each lettwer was written add as many spaces as there are in the Terminalk left to fully erase the line. after, continue filling out the line normally to avoid wired artefacts you currently get when inputting a invalif answer to the first question in #prolog)
+    # Final print to ensure entire text is displayed correctly
+    sys.stdout.write("\r\033[K" + text)
+    sys.stdout.flush()
+
+    # Optionally add a new line after the animated text
+    if doLineBreak:
+        print()  # Use print() here to add a single line break after the text
 
 def makeMatrix( 
         pX: int, 
@@ -230,17 +238,19 @@ def makeMatrix(
                     ret[i][j].append( [] )  
     return ret
 
-def transpose( matrix ):
+def transpose(matrix):
     """
-    Transposes the given matrix ( rows become columns and vice versa ).
+    Transposes the given matrix (rows become columns and vice versa).
 
     Parameters:
-    matrix ( list of lists ): The matrix to be transposed.
+    matrix (list of lists): The matrix to be transposed.
 
     Returns:
     list of lists: The transposed matrix.
     """
-    return [list( row ) for row in zip( *matrix )]
+    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+        raise TypeError("Input must be a list of lists")
+    return [list(row) for row in zip(*matrix)]
 
 def HSVpercentToRGB( 
         H: float, 
@@ -324,13 +334,70 @@ def vector_subtract( v1, v2 ):
     """
     return [a - b for a, b in zip( v1, v2 )]
 
-def intersectsLineVec( 
-        p1 :  tuple [ float, float ],
-        p2 :  tuple [ float, float ],
-        vec : tuple [ float, float ],
-        dir : tuple [ float, float ]
-        ) -> bool:
-    pass
+def doesLineIntersect(p1: tuple[float, float], p2: tuple[float, float], vec: tuple[float, float], dir: tuple[float, float]) -> bool:
+    """
+    Check if the vector originating at `vec` in the direction `dir` intersects
+    the line segment from `p1` to `p2`.
+
+    Parameters:
+    p1 (tuple): Start point of the line segment.
+    p2 (tuple): End point of the line segment.
+    vec (tuple): Starting point of the vector.
+    dir (tuple): Direction vector.
+
+    Returns:
+    bool: True if the vector intersects the line segment, False otherwise.
+    """
+    # Line segment vector
+    line_vec = (p2[0] - p1[0], p2[1] - p1[1])
+    
+    # Determinant to check if lines are parallel
+    det = dir[0] * line_vec[1] - dir[1] * line_vec[0]
+    if det == 0:
+        return False  # Lines are parallel and do not intersect
+
+    # Parameter t for the vector line
+    t = ((p1[0] - vec[0]) * line_vec[1] - (p1[1] - vec[1]) * line_vec[0]) / det
+    # Parameter u for the line segment
+    u = ((vec[0] - p1[0]) * dir[1] - (vec[1] - p1[1]) * dir[0]) / det
+    
+    # Debugging output
+    print(f"det: {det}, t: {t}, u: {u}")
+    
+    # Check if u is within [0, 1] (within the segment) and t >= 0 (forward direction)
+    return 0 <= u <= 1 and t >= 0
+
+def lineIntersection(p1: tuple[float, float], p2: tuple[float, float], q1: tuple[float, float], q2: tuple[float, float]) -> tuple[float, float] | None:
+    """
+    Calculate the intersection point of two lines if they intersect.
+
+    Parameters:
+    p1 (tuple): Start point of the first line.
+    p2 (tuple): End point of the first line.
+    q1 (tuple): Start point of the second line.
+    q2 (tuple): End point of the second line.
+
+    Returns:
+    tuple[float, float] | None: The intersection point as (x, y), or None if lines are parallel.
+    """
+    # Line vectors
+    r = (p2[0] - p1[0], p2[1] - p1[1])
+    s = (q2[0] - q1[0], q2[1] - q1[1])
+
+    # Determinant
+    det = r[0] * s[1] - r[1] * s[0]
+    if det == 0:
+        return None  # Lines are parallel or coincident
+
+    # Parameters for the lines
+    t = ((q1[0] - p1[0]) * s[1] - (q1[1] - p1[1]) * s[0]) / det
+    u = ((q1[0] - p1[0]) * r[1] - (q1[1] - p1[1]) * r[0]) / det
+
+    # Calculate intersection point
+    intersect_x = p1[0] + t * r[0]
+    intersect_y = p1[1] + t * r[1]
+    
+    return (intersect_x, intersect_y) if 0 <= t <= 1 and 0 <= u <= 1 else None
 
 def dot( v1, v2 ):
     return sum( x * y for x, y in zip( v1, v2 ) )

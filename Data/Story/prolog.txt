@@ -132,7 +132,7 @@ Er dreht sich um und verschwindet so schnell im Schatten, dass es beinahe unmög
 
 [MC] erhebt sich langsam und verlässt die Taverne, das Pergament mit der seltsamen Rune fest in der Hand. Ein kühler Wind schlägt ihm entgegen, als [?gender male|er female|sie nonbinary|they] die Tür hinter sich ins Schloss zieht. Die Nacht liegt dicht und dunkel auf dem Dorf, nur vereinzelt flackern Laternen an den Straßenrändern.
 
-&/ %Schaue auf das Pergament|lookAtScroll %Gehe nach Süden, Richtung Dorfmitte|goSouth %Schau dich um|lookAround %Begebe dich zu den alten Ruinen von Eldra’mar|goToRuins
+&/ %Schaue auf das Pergament|lookAtScroll %Gehe nach Süden, Richtung Dorfmitte|goSouth %Schau dich um|lookAround %Begebe dich zu den alten Ruinen von Eldra’mar|goToRuins~
 
 lookAtScroll Du entrollst das Pergament vorsichtig. Die Rune darauf scheint im schwachen Mondlicht fast zu leuchten. Sie erinnert dich an Geschichten über alte Magie – ein Symbol der Macht, das möglicherweise den Weg zu etwas Uraltem öffnet. Vielleicht wirst du die Rune bald entschlüsseln können.&/
 

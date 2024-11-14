@@ -1,5 +1,4 @@
 from helpful_functions import *
-import json
 
 def cleanInput(prompt="Enter value: ") -> int:
     out = input(prompt)  # Show a prompt message for the user
@@ -15,7 +14,7 @@ def consoleFormat(text: str | list[str]) -> str | list[str]:
         return newList
     else:
         raise TypeError(f"Input given was {type(text)}, not str / list[str]\n{text}")
-    
+
 def findSegment(text: str, operator: str, terminate: str = "~") -> str:
     """
     Takes the text and the operator as an input, 
@@ -281,7 +280,7 @@ def main_game_loop(save_content: str) -> None:
         save_content (str): The full content of the save file.
     """
     global attributes
-    attributes = {
+    attributes = { 
         "gender":"Undefined",
         "name":"Undefined",
         "class":"None",
@@ -328,7 +327,7 @@ def main_game_loop(save_content: str) -> None:
 
         if "&#" in segment_text:
             linked_file = resolveFileLink(segment_text)
-            new_file_content = load_save_file(f"Story/{linked_file}.txt")
+            new_file_content = load_save_file( f"Story/{linked_file}.txt")
             if new_file_content:
                 save_content = new_file_content  # Replace content with the new file's content
                 current_segment = ">start"  # Start the game from the new file's first segment
