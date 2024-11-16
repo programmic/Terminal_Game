@@ -6,6 +6,9 @@ import time
 from decimal import Decimal
 import os
 import shutil
+import math
+import keyboard
+from warnings import warn
 import sys
 
 clear = "\033c"
@@ -58,31 +61,33 @@ def readFile( pName: str, pNr: int | None = None, extension: str = ".txt", split
                 ausgabe.append( i )
     return ausgabe
 
-def lenformat( pInput: str | int, pDesiredLength: int, character: str = " ", place: str = "back" ) -> int:
+def lenformat( pIn: str | int, pLength: int, character: str = " ", place: str = "back" ) -> int:
     """
     Extends the length of a given string or integer to a specified length for prettier terminal output
 
     Args:
-        pInput ( string, int ): The text that is to be formated
-        pDesiredLength ( int ): Amount of characters the text should occupy in total
+        pIn ( string, int ): The text that is to be formated
+        pLength ( int ): Amount of characters the text should occupy in total
         character ( str, optional ): Characters used to fill blank space. Defaults to ' '.
         place ( str, optional ): Defines wether characters should be placed in front or behind text.\n
             Accepts: 
                 'front' / 'f'
-                'back' / 'b'  < Default
+                'back'  / 'b'  < Default
                 'brace' / 'br' / 'center' / 'c'
 
     Returns:
         String: String, formated
     """
-    if len( str( pInput ) ) > pDesiredLength:
-        raise Warning ( "Warning: Input text exceeded desired length." )
+    if len( str( pIn ) ) > pLength:
+        warn( "Warning: Input text exceeded desired length.\nText will be shortened to fit within given length" )
+        if pLength >= 5:     pIn = pIn [ :pLength - 3 ] + "..."
+        else:               pIn = pIn [ :pLength ]
     if place == "back" or place == "b":
-        return str( str( pInput ) + str( character * int( int( pDesiredLength ) - len( str( pInput ) ) ) ) )
+        return str( str( pIn ) + str( character * int( int( pLength ) - len( str( pIn ) ) ) ) )
     elif place == "front" or place == "f":
-        return str( character * int( int( pDesiredLength ) - len( str( pInput ) ) ) ) + str( str( pInput ) )
+        return str( character * int( int( pLength ) - len( str( pIn ) ) ) ) + str( str( pIn ) )
     elif place == "brace" or place == "br" or place == "center" or place == "c":
-        return
+        return str( math.floor((pLength - len(pIn)) / 2) * character + str(pIn) + math.ceil((pLength - len(pIn)) / 2) * character)
     else:
         raise SyntaxError ( f"Error: unsupported place type used in 'lenformat': {place}" )
     
@@ -191,18 +196,22 @@ def printAnimated(text: str, ttw: float = 1.0, sps: int = 150, mode="ttw", doLin
     if mode == "sps":
         if sps <= 0:
             raise ValueError(f"Error: sps (symbols per second) must be greater than zero (is {sps})")
-        wait = Decimal('1') / Decimal(sps)
+        wait = 1 / sps
     elif mode == "ttw":
-        wait = Decimal(str(ttw)) / Decimal(chars)
+        wait = ttw / chars
     else:
         raise ValueError(f"Error: Unexpected print type ({mode}) while trying to print out text:\n{text}")
 
     # Print each character with animation, resetting to the start of the line
     for i in range(chars):
         # Clear the current line, return to the start of the line, and print updated text
-        sys.stdout.write("\r\033[K" + text[:i+1])  # Clear line from cursor to end, then print up to current character
-        sys.stdout.flush()  # Flush the output to ensure it's displayed immediately
-        time.sleep(float(wait))  # Wait before showing the next character
+        print("\r\033[K" + text[:i+1])  # Clear line from cursor to end, then print up to current character
+        for _ in range(int(float(wait) / 0.01)):  # Check every 0.01 seconds
+            if keyboard.is_pressed("space"):  # Replace "any_key" with the desired key
+                sys.stdout.write("\r\033[K" + text)  # Immediately print full text
+                sys.stdout.flush()
+                return
+            time.sleep(0.01)
 
     # Final print to ensure entire text is displayed correctly
     sys.stdout.write("\r\033[K" + text)

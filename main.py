@@ -175,7 +175,7 @@ def display_question_and_get_answer(questions: dict) -> str:
     max_attempts = 7
 
     while attempts < max_attempts:
-        printAnimated("Choose your option ", sps= 25, doLinebrake=False)
+        printAnimated("Choose your option ", sps= 25, doLineBreak=False)
         playerSel = cleanInput("")
         try: # Try Index Keying
             playerSel = int(playerSel) - 1  # Convert to zero-indexed
@@ -335,7 +335,7 @@ def main_game_loop(save_content: str) -> None:
 
 if __name__ == "__main__":
     # Load the save file
-    save_file_content = load_save_file("Story/characterSetup.txt")
+    save_file_content = load_save_file("Data/Story/characterSetup.txt")
     #save_file_content = load_save_file("Story/prolog.txt")
     
     # Start the game loop
