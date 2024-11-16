@@ -55,7 +55,10 @@
     Nun herrscht der König, mächtig, unbesiegt,
     Doch fragen die Weisen, ob das Licht noch siegt.
     In Schatten spricht man, was der Barde nicht singt,
-    Von einer Zukunft, die in Dunkelheit schwingt. &umsehen~
+    Von einer Zukunft, die in Dunkelheit schwingt.
+&/
+%Gehe zur Bar und trinke etwas|bar
+%Setze dich zu der mysteriösen, vermummten Gestalt|magician~
 
 
 >magician Als du dich in richtung des Vermummten wendest, erhebt sich dieser aus seiner Nische in der Ecke der Taverne. Er kommt langsam auf dich zu, und obwohl das Feuer in der Nähe leuchtet, scheint sein Gesicht fast unsichtbar zu bleiben, wie von einer unsichtbaren Kraft verschleiert. Er setzt sich wortlos dir gegenüber. Seine Stimme ist tief, fast wie das Murmeln des Windes.
@@ -134,12 +137,12 @@ Er dreht sich um und verschwindet so schnell im Schatten, dass es beinahe unmög
 
 &/ %Schaue auf das Pergament|lookAtScroll %Gehe nach Süden, Richtung Dorfmitte|goSouth %Schau dich um|lookAround %Begebe dich zu den alten Ruinen von Eldra’mar|goToRuins~
 
-lookAtScroll Du entrollst das Pergament vorsichtig. Die Rune darauf scheint im schwachen Mondlicht fast zu leuchten. Sie erinnert dich an Geschichten über alte Magie – ein Symbol der Macht, das möglicherweise den Weg zu etwas Uraltem öffnet. Vielleicht wirst du die Rune bald entschlüsseln können.&/
+>lookAtScroll Du entrollst das Pergament vorsichtig. Die Rune darauf scheint im schwachen Mondlicht fast zu leuchten. Sie erinnert dich an Geschichten über alte Magie – ein Symbol der Macht, das möglicherweise den Weg zu etwas Uraltem öffnet. Vielleicht wirst du die Rune bald entschlüsseln können.&/
 
-goSouth [MC] wendet sich nach Süden und macht sich auf den Weg in Richtung des Zentrums von Lortara. Die Pflastersteine glitzern vor Feuchtigkeit, und der Nebel kriecht über den Boden wie Geister vergangener Tage. In der Ferne ertönt das schwache Läuten der Dorfkirche, das die Stille der Nacht durchdringt. Ein frösteln überkommt dich, als du das düstere Treiben des Dorfes hinter dir lässt und in die unheimliche Stille trittst.
+>goSouth [MC] wendet sich nach Süden und macht sich auf den Weg in Richtung des Zentrums von Lortara. Die Pflastersteine glitzern vor Feuchtigkeit, und der Nebel kriecht über den Boden wie Geister vergangener Tage. In der Ferne ertönt das schwache Läuten der Dorfkirche, das die Stille der Nacht durchdringt. Ein frösteln überkommt dich, als du das düstere Treiben des Dorfes hinter dir lässt und in die unheimliche Stille trittst.
 
 &/ %Weiter nach Süden Richtung Waldrand|goSouthForest %Klopfe an das Fenster eines Hauses|knockHouse %Schau in eine dunkle Seitengasse|lookAlley
 
-lookAlley In der dunklen Gasse erblickst du eine schemenhafte Figur, die sich fast unsichtbar im Schatten bewegt. Ein sanfter Glanz, wie von einem Talisman oder einer Kette, blitzt kurz auf, bevor die Gestalt wieder im Schatten verschwindet. Ein Schauer läuft dir über den Rücken.
+>lookAlley In der dunklen Gasse erblickst du eine schemenhafte Figur, die sich fast unsichtbar im Schatten bewegt. Ein sanfter Glanz, wie von einem Talisman oder einer Kette, blitzt kurz auf, bevor die Gestalt wieder im Schatten verschwindet. Ein Schauer läuft dir über den Rücken.
 
 &/ %Folge der Gestalt in die Gasse|followFigure %Lasse die Gasse hinter dir und gehe weiter nach Süden|goSouthForest

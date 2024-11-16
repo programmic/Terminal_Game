@@ -165,8 +165,9 @@ def display_question_and_get_answer(questions: dict) -> str:
     
     # Display options to the user and keep track of how many lines were printed
     lines_printed = 0
+    print()
     for idx, option in enumerate(questions.keys(), 1):
-        option_text = f"{colors.blue}{' '*3}[{lenformat(idx, len(str(len(questions.keys()))), place='front')}]{colors.clear} {option}"
+        option_text = f"  {colors.blue}{' '*3}[{lenformat(idx, len(str(len(questions.keys()))), place='front')}]{colors.clear} {option}\n"
         printAnimated(option_text, sps=25)
         # Calculate how many lines this option will take up considering wrapping
         lines_printed += calculate_wrapped_lines(option_text, terminal_width)
@@ -194,9 +195,9 @@ def display_question_and_get_answer(questions: dict) -> str:
                         # Clear the options (but not the text above them)
                         clear_lines(lines_printed)  # Also clearing the prompt line
                         return questions[key]
-
         attempts += 1
-        print(f"Invalid input. {max_attempts - attempts} attempts left.",end="\r")
+        if not playerSel == "\x0D": print(f"Invalid input. {max_attempts - attempts} attempts left.",end="\r")
+        else: print(f"{colors.darkmagenta}")
 
     print("Maximum attempts reached.")
     return ""
@@ -327,7 +328,7 @@ def main_game_loop(save_content: str) -> None:
 
         if "&#" in segment_text:
             linked_file = resolveFileLink(segment_text)
-            new_file_content = load_save_file( f"Story/{linked_file}.txt")
+            new_file_content = load_save_file( f"Data/Story/{linked_file}.txt")
             if new_file_content:
                 save_content = new_file_content  # Replace content with the new file's content
                 current_segment = ">start"  # Start the game from the new file's first segment

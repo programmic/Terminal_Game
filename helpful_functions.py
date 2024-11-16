@@ -14,6 +14,13 @@ import sys
 clear = "\033c"
 defaultTextSpeed = 150 # symbols/second
 
+def toBinary(a):
+  l,m=[],[]
+  for i in a:
+    l.append(ord(i))
+  for i in l:
+    m.append(int(bin(i)[2:]))
+  return m
 
 def time_it( func ):
     """
@@ -198,24 +205,25 @@ def printAnimated(text: str, ttw: float = 1.0, sps: int = 150, mode="ttw", doLin
             raise ValueError(f"Error: sps (symbols per second) must be greater than zero (is {sps})")
         wait = 1 / sps
     elif mode == "ttw":
+        if ttw < 0:
+            raise ValueError(f"Error: ttw (time to wait) must be greater than or equal zero (is {sps})")
         wait = ttw / chars
     else:
         raise ValueError(f"Error: Unexpected print type ({mode}) while trying to print out text:\n{text}")
 
-    # Print each character with animation, resetting to the start of the line
-    for i in range(chars):
+    enterBlock: bool = False
+    if keyboard.is_pressed("enter"): enterBlock = True
+    for i in text:
         # Clear the current line, return to the start of the line, and print updated text
-        print("\r\033[K" + text[:i+1])  # Clear line from cursor to end, then print up to current character
+        print(i, end="", flush= True)  # Clear line from cursor to end, then print up to current character
         for _ in range(int(float(wait) / 0.01)):  # Check every 0.01 seconds
-            if keyboard.is_pressed("space"):  # Replace "any_key" with the desired key
+            if keyboard.is_pressed("space") or (keyboard.is_pressed("enter") and not enterBlock):  # Replace "any_key" with the desired key
                 sys.stdout.write("\r\033[K" + text)  # Immediately print full text
                 sys.stdout.flush()
                 return
             time.sleep(0.01)
-
-    # Final print to ensure entire text is displayed correctly
-    sys.stdout.write("\r\033[K" + text)
-    sys.stdout.flush()
+        if enterBlock:
+                if not keyboard.is_pressed("enter"): enterBlock = False
 
     # Optionally add a new line after the animated text
     if doLineBreak:
