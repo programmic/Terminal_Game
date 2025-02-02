@@ -44,7 +44,7 @@ def time_it( func ):
 
 def readFile( pName: str, pNr: int | None = None, extension: str = ".txt", split: bool = True ) -> list[str]:
     """
-    Reads a file ending with a number, usefull when multible similar files are in use, like different tasks or configs
+    Reads a file ending with a number, useful when multiple similar files are in use, like different tasks or configs
 
     Args:
         pName ( String ): Path to the file location and file name

@@ -122,7 +122,7 @@ def parse_options(segment: str) -> dict:
 
     return questions
 
-def handleTextVariables(text: str) -> None:
+def handleTextVariables(text: str) -> None: # [?gender male|Sein female|Ihr nonbinary|They]
     while "&*" in text:
         startIdx = text.find("&*") + 2
         endIdx = text.find("*", startIdx)
@@ -222,6 +222,8 @@ def resolveFileLink(segment: str) -> str:
 def resolveAliases(segment: str, player_attributes: dict) -> str:
     """
     Resolves any placeholders in the segment based on player attributes.
+    Placeholders are in the format [?variable option1:replacement1 option2:replacement2 ...]
+    Accepts the [MC] placeholder for the player's name.
 
     Args:
         segment (str): The input segment containing placeholders.
@@ -236,29 +238,46 @@ def resolveAliases(segment: str, player_attributes: dict) -> str:
         if placeholder_end == -1:
             raise ValueError(f"{colors.red}Value Replacement Error:\nNo closing bracket found{colors.clear}")
             # No closing bracket found
-
-        # Extract the placeholder text
-        placeholder_text = segment[placeholder_start + 2:placeholder_end]  # Ignore the "[?" part
+# Extract the placeholder text (ignoring the "[?" part)
+        placeholder_text = segment[placeholder_start + 2:placeholder_end]
         options = placeholder_text.split()
 
-        # Build the resolved text
-        resolved_text = segment[:placeholder_start]  # Text before the placeholder
+        # Text before the placeholder
+        resolved_text = segment[:placeholder_start]
         varName = options[0]
-        if varName in player_attributes.keys():
+        if varName in player_attributes:
+            varVal = str(player_attributes[varName]).lower()
+            replaced = False
+            # Loop over all options (each in the format "option:replacement")
             for option in options[1:]:
-                varVal = player_attributes[varName].lower()
-                if option.split(":")[0] == varVal:
-                    resolved_text += str(option.split(":")[1])
+                # Use maxsplit=1 in case the replacement text contains colons
+                parts = option.split(":", 1)
+                if len(parts) != 2:
+                    colors.printRed(f"Value Replacement Error: Option '{option}' is not in the format 'option:replacement'.")
+                    continue
+                option_key, replacement = parts[0].lower(), parts[1]
+                if option_key == varVal:
+                    resolved_text += replacement
+                    replaced = True
+                    break  # Exit after the first match
+            if not replaced:
+                # If no matching option is found, you can choose to insert a default value
+                # or simply append nothing.
+                colors.printRed(f"Value Replacement Error: No matching entry for '{varName}' with value '{player_attributes[varName]}' found.")
         else:
-            resolved_text += ""  # Fallback if no matching key
-            colors.printRed("Value Replacement Error:")
-            colors.printRed(f"No matching Variable found in {player_attributes}")
-
-        resolved_text += segment[placeholder_end + 1:]  # Add remaining text
-        segment = resolved_text  # Update segment for further processing
-
-        placeholder_start = segment.find("[?")  # Find the next placeholder
-    return segment.replace("[MC]", player_attributes["name"])
+            colors.printRed(f"Value Replacement Error: Variable '{varName}' not found in player attributes.")
+        
+        # Append the remaining text
+        resolved_text += segment[placeholder_end + 1:]
+        segment = resolved_text  # Update the segment for further placeholders
+        placeholder_start = segment.find("[?")
+    
+    # Finally, replace [MC] with the player's name if present
+    if "name" in player_attributes:
+        segment = segment.replace("[MC]", str(player_attributes["name"]))
+    else:
+        colors.printRed("Value Replacement Error: 'name' not found in player attributes.")
+    return segment
 
 def printText(t: str, ttw: float = 1.0, sps: int = 20, mode="sps") -> None:
     """
